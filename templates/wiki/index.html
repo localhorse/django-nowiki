@@ -1,0 +1,21 @@
+{% extends "noware.html" %}
+
+{% block head_title %}Wiki Index{% endblock %}
+{% block body_title %}Wiki Index{% endblock %}
+
+{% block col_left %}
+
+	{% if pages %}
+		<ul>
+			{% for page in pages %}
+				<li><a href="{{ page.name }}/">{{ page.space_name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p><a href="NewPage/edit/">Create a new page</a>.</p>
+	{% endif %}
+{% endblock %}
+
+{% block col_sidebar %}
+<p>You are viewing our wiki of HOWTOs and tutorials. There isn't much here at the moment, but you're welcome to <a href="/register/">sign up</a> and add/edit pages.</p>
+{% endblock %}

@@ -1,0 +1,12 @@
+*.py~
+*.pyo
+*.pyc
+*.swp
+*~
+*.core
+configure-stamp
+build-stamp
+*.changes
+*.deb
+*.dsc
+*.tar.gz

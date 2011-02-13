@@ -1,0 +1,76 @@
+{% extends "noware.html" %}
+{% load markup %}
+
+{# move this all (the if's) to views.py! just send the actual text... #}
+
+{% block head_title %}
+
+{% if not submitted %}{% if not confirmed %}
+Delete {{ page.space_name }}?
+{% endif %}{% endif %}
+
+{% if submitted %}{% if confirmed %}
+Page deleted
+{% endif %}{% endif %}
+
+{% if submitted %}{% if not confirmed %}
+Deletion cancelled
+{% endif %}{% endif %}
+
+{% endblock %}
+
+{% block body_title %}
+
+{% if not submitted %}{% if not confirmed %}
+Delete {{ page.space_name }}?
+{% endif %}{% endif %}
+
+{% if submitted %}{% if confirmed %}
+Page deleted
+{% endif %}{% endif %}
+
+{% if submitted %}{% if not confirmed %}
+Deletion cancelled
+{% endif %}{% endif %}
+
+{% endblock %}
+
+{% block col_left %}
+
+{% if not submitted %}
+
+<p><em><b>Are you sure you want to delete <a href="/wiki/{{ page.name }}">{{ page.space_name }}</a>?</b></em></p>
+
+<div id="confirm_container">
+
+<form action="." method="post">
+{% csrf_token %}
+
+<input type="submit" name="confirm" value="Yes"> <input type="submit" name="confirm" value="No">
+
+</form>
+
+</div>
+
+<hr />
+<br />
+
+	{{ page.content|safe|markdown:"toc,wikilinks(base_url=/wiki/)" }}
+
+{% endif %}
+
+{% if submitted %}
+{% if confirmed %}
+<p><em><a href="/wiki/{{ page.name }}">{{ page.space_name }}</a> was deleted successfully.</em></p>
+{% endif %}
+{% if not confirmed %}
+<p><em><a href="/wiki/{{ page.name }}/">{{ page.space_name }}</a> was not deleted.</em></p>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+
+{% block col_sidebar %}
+	  {# <a href="/wiki/{{ page.name }}/revert/{{ page_revision.id }}/">[revert to]</a> #}<a href="/wiki/{{ page.name }}/history/">[history]</a> <a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}

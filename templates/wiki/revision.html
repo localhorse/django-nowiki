@@ -1,0 +1,21 @@
+{% extends "noware.html" %}
+{% load markup %}
+
+{% block head_title %}{{ page.space_name }} (revision){% endblock %}
+{% block body_title %}<a href="/wiki/{{ page.name }}/">{{ page.space_name }}</a> (<em>revision</em>){% endblock %}
+
+{% block col_left %}
+
+<p><em>This revision ("<b>{{ page_revision.edit_reason }}"</b>) was created by {{ page_revision.user }} on {{ page_revision.created_on }}</em></p>
+
+<hr />
+<br />
+
+	{{ page_revision.content|safe|markdown:"toc,wikilinks(base_url=/wiki/)" }}
+
+{% endblock %}
+
+
+{% block col_sidebar %}
+	  {# <a href="/wiki/{{ page.name }}/revert/{{ page_revision.id }}/">[revert to]</a> #}<a href="/wiki/{{ page.name }}/history/">[history]</a> <a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}

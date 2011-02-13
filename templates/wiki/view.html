@@ -1,0 +1,32 @@
+{% extends "noware.html" %}
+{% load markup %}
+
+{% block head_title %}{{ page.space_name }}{% endblock %}
+{% block body_title %}{{ page.space_name }}{% endblock %}
+
+{% block col_left %}
+
+	{% if not page.id %}
+		<p>This page doesn't exist yet. Do you want to <a href="edit/">create it</a>?</p>
+	{% endif %}
+
+	{% if page.id %}
+	{{ current_revision.content|safe|markdown:"toc,wikilinks(base_url=/wiki/)" }}
+
+<br />
+<hr />
+
+		<p><em>Last edited by {{ page.user }} on {{ page.modified_on }}</em></p>
+	{% endif %}
+
+{% endblock %}
+
+
+{% block col_sidebar %}
+	{% if page.id %}
+		<a href="edit/">[edit page]</a> <a href="delete/">[delete page]</a> <a href="history/">[history]</a>
+	{% else %}
+		<a href="edit/">[create page]</a>
+	{% endif %}
+		<a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}

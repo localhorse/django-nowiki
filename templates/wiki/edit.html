@@ -1,0 +1,59 @@
+{% extends "noware.html" %}
+
+{% block head_title %}Edit page{% endblock %}
+{% block body_title %}Edit page{% endblock %}
+
+{% block col_left %}
+
+{% if form.errors %}
+<p class="errors"><b>form.errors</b></p>
+{{ form.errors }}
+{% endif %}
+
+{% if form.non_field_errors %}
+<p class="errors"><b>form.non_field_errors</b></p>
+{{ form.non_field_errors}}
+{% endif %}
+
+<div id="edit_container">
+	<form action="." method="post">
+	  {% csrf_token %}
+
+		<div class="field_wrapper required{% if form.name.errors %} errors{% endif %}" id="field_name">
+			<label for="id_name" class="field_name">Page{% if form.name.errors %}<font color="red">*</font>{% endif %}</label>
+			<div class="field text_input">
+				{{ form.name }}
+			</div>
+		</div>
+
+		<p></p>
+
+		<div class="field_wrapper required{% if form.content.errors %} errors{% endif %}" id="field_content">
+			<label for="id_content" class="field_name">Content{% if form.content.errors %}<font color="red">*</font>{% endif %}</label>
+			<div class="field textarea">
+				{{ form.content }}
+			</div>
+		</div>
+
+		<p></p>
+
+		<div class="field_wrapper required{% if form.edit_reason.errors %} errors{% endif %}" id="field_edit_reason">
+			<label for="id_edit_reason" class="field_name">Edit Reason{% if form.edit_reason.errors %}<font color="red">*</font>{% endif %}</label>
+			<div class="field textarea">
+				{{ form.edit_reason }}
+			</div>
+		</div>
+
+		<p></p>
+
+		<div class="submit">
+			<input type="submit" value="Save" />
+		</div>
+
+	</form>
+	</div>
+{% endblock %}
+
+{% block col_sidebar %}
+		<a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "noware.html" %}
+
+{% block head_title %}{{ page.space_name }} (history){% endblock %}
+{% block body_title %}<a href="/wiki/{{ page.name }}/">{{ page.space_name }}</a> (<em>history</em>){% endblock %}
+
+{% block col_left %}
+
+<h2>Current revision:</h2>
+
+{% if current_revision %}
+		<ul>
+			<li><a href="/wiki/{{ page.name }}/revision/{{ current_revision.id  }}/">{{ current_revision.edit_reason }}</a> - by {{ current_revision.user }} on {{ current_revision.created_on }}</li>
+		</ul>
+{% endif %}
+
+<h2>Past revisions:</h2>
+
+	{% if page_revisions %}
+
+		<ul>
+			{% for page_revision in page_revisions %}
+				<li><a href="/wiki/{{ page.name }}/revision/{{ page_revision.id  }}/">{{ page_revision.edit_reason }}</a> - by {{ page_revision.user }} on {{ page_revision.created_on }} (<a href="/wiki/{{ page.name }}/revert/{{ page_revision.id }}/">revert</a>)</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>There are no edits for this page, other than the current revision.</p>
+	{% endif %}
+{% endblock %}
+
+{% block col_sidebar %}
+	<a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "noware.html" %}
+{% load markup %}
+
+{# move this all (the if's) to views.py! just send the actual text... #}
+
+{% block head_title %}
+
+{% if not submitted %}{% if not confirmed %}
+Roll back {{ page.space_name }}?
+{% endif %}{% endif %}
+
+{% if submitted %}{% if confirmed %}
+Changes submitted
+{% endif %}{% endif %}
+
+{% if submitted %}{% if not confirmed %}
+Reversion cancelled
+{% endif %}{% endif %}
+
+{% endblock %}
+
+{% block body_title %}
+
+{% if not submitted %}{% if not confirmed %}
+Roll back {{ page.space_name }}?
+{% endif %}{% endif %}
+
+{% if submitted %}{% if confirmed %}
+Changes submitted
+{% endif %}{% endif %}
+
+{% if submitted %}{% if not confirmed %}
+Reversion cancelled
+{% endif %}{% endif %}
+
+{% endblock %}
+
+{% block col_left %}
+
+{% if not submitted %}
+
+<p><em>This revision ("<b>{{ page_revision.edit_reason }}"</b>) was created by {{ page_revision.user }} on {{ page_revision.created_on }}</em></p>
+
+<p><em><b>Are you sure you want to revert to this version?</b></em></p>
+
+<div id="confirm_container">
+
+<form action="." method="post">
+{% csrf_token %}
+
+<input type="submit" name="confirm" value="Yes"> <input type="submit" name="confirm" value="No">
+
+</form>
+
+</div>
+
+<hr />
+<br />
+
+	{{ page_revision.content|safe|markdown:"toc,wikilinks(base_url=/wiki/)" }}
+
+{% endif %}
+
+{% if submitted %}
+{% if confirmed %}
+<p><em>The current revision for <a href="/wiki/{{ page.name }}/">{{ page.space_name }}</a> was set to "<b>{{ page_revision.edit_reason }}</b>" (created on {{ page_revision.created_on }})</em></p>
+{% endif %}
+{% if not confirmed %}
+<p><em>The proposed changes to <a href="/wiki/{{ page.name }}/">{{ page.space_name }}</a> were not saved.</em></p>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+
+{% block col_sidebar %}
+	  {# <a href="/wiki/{{ page.name }}/revert/{{ page_revision.id }}/">[revert to]</a> #}<a href="/wiki/{{ page.name }}/history/">[history]</a> <a href="{% url wiki.views.index %}">[list pages]</a>
+{% endblock %}
