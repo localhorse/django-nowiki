@@ -8,7 +8,7 @@
 	{% if pages %}
 		<ul>
 			{% for page in pages %}
-				<li><a href="{{ page.name }}/">{{ page.space_name }}</a></li>
+				<li><a href="{{ page.name }}/">{{ page.space_name }}</a> - by {{ page.user }}</li>
 			{% endfor %}
 		</ul>
 	{% else %}

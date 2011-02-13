@@ -14,7 +14,7 @@ from datetime import datetime
 
 def index(request):
     """Lists all pages stored in the wiki."""
-    pages = Page.objects.all()
+    pages = Page.objects.all().order_by('-created_on')
 
     for page in pages:
         # turn underscores to spaces
