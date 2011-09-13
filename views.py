@@ -11,6 +11,7 @@ from models import Page
 from models import PageRevision
 
 from datetime import datetime
+import time
 
 def index(request):
     """Lists all pages stored in the wiki."""
@@ -105,8 +106,11 @@ def view(request, name):
     # take out underscores
     page.space_name = page.name.replace("_", " ")
 
+    # time zone as defined in the project settings
+    cur_time_zone = time.tzname[0]
+
     context = RequestContext(request)
-    return render_to_response('wiki/view.html', {'page': page, 'current_revision': current_revision}, context)
+    return render_to_response('wiki/view.html', {'page': page, 'current_revision': current_revision, 'cur_time_zone': cur_time_zone}, context)
 
 
 @csrf_protect

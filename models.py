@@ -30,6 +30,7 @@ class Page(models.Model):
     
     created_on = models.DateTimeField(auto_now_add = 1)
     modified_on = models.DateTimeField(auto_now_add = 1)
+    ##cur_time_zone = models.TextField(max_length = 5, null = True)
     current_revision = models.ForeignKey(PageRevision, related_name = 'main', blank = True, null = True)
     user = models.ForeignKey(User)
 
