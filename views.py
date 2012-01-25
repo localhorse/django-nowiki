@@ -22,7 +22,7 @@ def index(request):
         page.space_name = page.name.replace("_", " ")
 
     context = RequestContext(request)
-    return render_to_response('wiki/index.html', {'pages': pages}, context)
+    return render_to_response('index.html', {'pages': pages}, context)
 
 def history(request, name):
     """Lists all page edits for this page."""
@@ -34,7 +34,7 @@ def history(request, name):
     page.space_name = page.name.replace("_", " ")
 
     context = RequestContext(request)
-    return render_to_response('wiki/history.html', {'page': page, 'page_revisions': page_revisions, 'current_revision': current_revision}, context)
+    return render_to_response('history.html', {'page': page, 'page_revisions': page_revisions, 'current_revision': current_revision}, context)
 
 def old_page(request, name, id):
     """Displays a specific page revision."""
@@ -43,7 +43,7 @@ def old_page(request, name, id):
     # take out underscores
     page.space_name = page.name.replace("_", " ")
     context = RequestContext(request)
-    return render_to_response('wiki/revision.html', {'page': page, 'page_revision': page_revision}, context)
+    return render_to_response('revision.html', {'page': page, 'page_revision': page_revision}, context)
 
 @staff_member_required
 def delete_page(request, name):
@@ -63,7 +63,7 @@ def delete_page(request, name):
         submitted = False
         confirmed = None
 
-    return render_to_response('wiki/delete.html', {'page': page, 'submitted': submitted, 'confirmed': confirmed}, context)
+    return render_to_response('delete.html', {'page': page, 'submitted': submitted, 'confirmed': confirmed}, context)
 
 @staff_member_required
 def revert_page(request, name, id):
@@ -91,7 +91,7 @@ def revert_page(request, name, id):
         submitted = False
         confirmed = None
 
-    return render_to_response('wiki/revert.html', {'page': page, 'page_revision': page_revision, 'submitted': submitted, 'confirmed': confirmed}, context)
+    return render_to_response('revert.html', {'page': page, 'page_revision': page_revision, 'submitted': submitted, 'confirmed': confirmed}, context)
 
 def view(request, name):
     """Shows a single wiki page."""
@@ -110,7 +110,7 @@ def view(request, name):
     cur_time_zone = time.tzname[0]
 
     context = RequestContext(request)
-    return render_to_response('wiki/view.html', {'page': page, 'current_revision': current_revision, 'cur_time_zone': cur_time_zone}, context)
+    return render_to_response('view.html', {'page': page, 'current_revision': current_revision, 'cur_time_zone': cur_time_zone}, context)
 
 
 @csrf_protect
@@ -169,4 +169,4 @@ def edit(request, name):
             form = PageForm(initial={'name': name})
 
     context = RequestContext(request)
-    return render_to_response('wiki/edit.html', {'form': form}, context)
+    return render_to_response('edit.html', {'form': form}, context)
